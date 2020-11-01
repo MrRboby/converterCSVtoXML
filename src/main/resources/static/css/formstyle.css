@@ -1,8 +1,5 @@
-.sort_container {
-    padding: 1em 1em 1em 0;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+.first_sort, .second_sort {
+    display: inline-block;
 }
 .first_sort > label, .second_sort > label {
     display: block;

@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/css/formstyle.css"/>
 </head>
 <body>
-<form action="#" method="post" enctype="multipart/form-data" th:action="@{/}" th:object="${form}">
+<form method="post" enctype="multipart/form-data" th:action="@{/}" th:object="${form}">
     <label>Файл: <input type="file" name="file"/></label>
     <div class="sort_container">
         <fieldset class="first_sort">
@@ -13,19 +13,23 @@
             <label><input type="radio" name="firstSort" th:value="title" th:field="*{firstSorting}"/>Название</label>
             <label><input type="radio" name="firstSort" th:value="director" th:field="*{firstSorting}"/>Режиссер</label>
             <label><input type="radio" name="firstSort" th:value="genre" th:field="*{firstSorting}"/>Жанр</label>
-            <label><input type="radio" name="firstSort" th:value="releaseYear" th:field="*{firstSorting}"/>Год выхода</label>
+            <label><input type="radio" name="firstSort" th:value="releaseYear" th:field="*{firstSorting}"/>Год
+                выхода</label>
             <label><input type="radio" name="firstSort" th:value="country" th:field="*{firstSorting}"/>Страна-производитель</label>
-            <label><input type="radio" name="firstSort" th:value="kinopoiskScore" th:field="*{firstSorting}"/>Оценка на сервисе Кинопоиск</label>
+            <label><input type="radio" name="firstSort" th:value="kinopoiskScore" th:field="*{firstSorting}"/>Оценка на
+                сервисе Кинопоиск</label>
             <label><input type="radio" name="firstSort" th:value="duration" th:field="*{firstSorting}"/>Продолжительность</label>
         </fieldset>
         <fieldset class="second_sort">
             <legend>Дополнительная сортировка:</legend>
             <label><input type="radio" name="secondSort" th:value="title" th:field="*{secondSorting}"/>Название</label>
-            <label><input type="radio" name="secondSort" th:value="director" th:field="*{secondSorting}"/>Режиссер</label>
+            <label><input type="radio" name="secondSort" th:value="director"
+                          th:field="*{secondSorting}"/>Режиссер</label>
             <label><input type="radio" name="secondSort" th:value="genre" th:field="*{secondSorting}"/>Жанр</label>
             <label><input type="radio" name="secondSort" th:value="releaseYear" th:field="*{secondSorting}"/>Год выхода</label>
             <label><input type="radio" name="secondSort" th:value="country" th:field="*{secondSorting}"/>Страна-производитель</label>
-            <label><input type="radio" name="secondSort" th:value="kinopoiskScore" th:field="*{secondSorting}"/>Оценка на сервисе Кинопоиск</label>
+            <label><input type="radio" name="secondSort" th:value="kinopoiskScore" th:field="*{secondSorting}"/>Оценка
+                на сервисе Кинопоиск</label>
             <label><input type="radio" name="secondSort" th:value="duration" th:field="*{secondSorting}"/>Продолжительность</label>
         </fieldset>
     </div>

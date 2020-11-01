@@ -11,6 +11,7 @@ public class Form {
 
     /**
      * Возвращает тип сортировки
+     *
      * @return тип сортировки
      */
     public String getFirstSorting() {
@@ -19,6 +20,7 @@ public class Form {
 
     /**
      * Устанавливает значение сортировки
+     *
      * @param firstSorting тип сортировки (title, director, genre, release_year, country, kinopoisk_score, duration)
      */
     public void setFirstSorting(String firstSorting) {
@@ -27,6 +29,7 @@ public class Form {
 
     /**
      * Возвращает тип дополнительной сортировки
+     *
      * @return тип дополнительной сортировки
      */
     public String getSecondSorting() {
@@ -35,6 +38,7 @@ public class Form {
 
     /**
      * Устанавливает значение дополнительной сортировки
+     *
      * @param secondSorting тип дополнительной сортировки (title, director, genre, release_year, country, kinopoisk_score, duration)
      */
     public void setSecondSorting(String secondSorting) {
@@ -43,6 +47,7 @@ public class Form {
 
     /**
      * Возвращает значение первого года фильтрации
+     *
      * @return первый год фильтрации
      */
     public Integer getFirstYearFilter() {
@@ -51,6 +56,7 @@ public class Form {
 
     /**
      * Устанавливает значение первого года фильтрации
+     *
      * @param firstYearFilter первый год фильтрации
      */
     public void setFirstYearFilter(Integer firstYearFilter) {
@@ -59,6 +65,7 @@ public class Form {
 
     /**
      * Возвращает значение последнего года фильтрации
+     *
      * @return последний год фильтрации
      */
     public Integer getLastYearFilter() {
@@ -67,6 +74,7 @@ public class Form {
 
     /**
      * Устанавливает значение последнего года фильтрации
+     *
      * @param lastYearFilter последний год фильтрации
      */
     public void setLastYearFilter(Integer lastYearFilter) {

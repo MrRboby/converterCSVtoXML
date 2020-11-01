@@ -1,42 +1,68 @@
 package converter.model;
 
-import com.opencsv.bean.CsvBindByName;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Класс-хранилище фильма
+ * Класс-хранилище фильма для выходного файла
  */
-@XmlType(propOrder={"title", "director", "genre", "releaseYear", "country", "kinopoiskScore", "duration"})
-public class Movie {
-    @CsvBindByName(column = "title", locale = "ru-RU")
+@XmlType(propOrder = {"title", "director", "genre", "releaseYear", "country", "kinopoiskScore", "duration"})
+public class MovieXml {
+    private Integer id;
     private String title;
-
-    @CsvBindByName(column = "director", locale = "ru-RU")
     private String director;
-
-    @CsvBindByName(column = "genre", locale = "ru-RU")
     private String genre;
-
-    @CsvBindByName(column = "release_year")
     private Integer releaseYear;
-
-    @CsvBindByName(column = "country", locale = "ru-RU")
     private String country;
-
-    @CsvBindByName(column = "kinopoisk_score", locale = "ru-RU")
     private Double kinopoiskScore;
-
-    @CsvBindByName(column = "duration")
     private Integer duration;
 
     /**
      * Создание пустого объекта филмьа
      */
-    public Movie() {}
+    public MovieXml() {
+    }
+
+    /**
+     * Создание объекта фильма он основе объекта фильма входного файла и id
+     *
+     * @param movieCsv объект фильма входного файла
+     * @param id       id
+     */
+    public MovieXml(MovieCsv movieCsv, Integer id) {
+        this.id = id;
+        this.title = movieCsv.getTitle();
+        this.director = movieCsv.getDirector();
+        this.genre = movieCsv.getGenre();
+        this.releaseYear = movieCsv.getReleaseYear();
+        this.country = movieCsv.getCountry();
+        this.kinopoiskScore = movieCsv.getKinopoiskScore();
+        this.duration = movieCsv.getDuration();
+    }
+
+    /**
+     * Возвращает идентификатор фильма
+     *
+     * @return идентификатор фильма
+     */
+    @XmlAttribute(name = "id")
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * Устанавливает идентификатор фильма
+     *
+     * @param id идентификатор фильма
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     /**
      * Возвращает название фильма
+     *
      * @return название фильма
      */
     @XmlElement(name = "title")
@@ -46,6 +72,7 @@ public class Movie {
 
     /**
      * Устанавливает название фильма
+     *
      * @param title название фильма
      */
     public void setTitle(String title) {
@@ -54,6 +81,7 @@ public class Movie {
 
     /**
      * Возвращает режиссера фильма
+     *
      * @return режиссер фильма
      */
     @XmlElement(name = "director")
@@ -63,6 +91,7 @@ public class Movie {
 
     /**
      * Устанавливает режиссера фильма
+     *
      * @param director режиссер фильма
      */
     public void setDirector(String director) {
@@ -71,6 +100,7 @@ public class Movie {
 
     /**
      * Возвращает жанр фильма
+     *
      * @return жанр фильма
      */
     @XmlElement(name = "genre")
@@ -80,6 +110,7 @@ public class Movie {
 
     /**
      * Устанавливает жанр фильма
+     *
      * @param genre жанр фильма
      */
     public void setGenre(String genre) {
@@ -88,6 +119,7 @@ public class Movie {
 
     /**
      * Возвращает год выхода фильма
+     *
      * @return год выхода фильма
      */
     @XmlElement(name = "release_year")
@@ -97,6 +129,7 @@ public class Movie {
 
     /**
      * Устанавливает год выхода фильма
+     *
      * @param releaseYear год выхода фильма
      */
     public void setReleaseYear(Integer releaseYear) {
@@ -105,6 +138,7 @@ public class Movie {
 
     /**
      * Возвращает страну-производителя фильма
+     *
      * @return страна-производитель фильма
      */
     @XmlElement(name = "country")
@@ -114,6 +148,7 @@ public class Movie {
 
     /**
      * Устанавливает страну-производителя фильма
+     *
      * @param country страна-производитель фильма
      */
     public void setCountry(String country) {
@@ -122,6 +157,7 @@ public class Movie {
 
     /**
      * Возвращает оценку фильма на сервисе Кинопоиск
+     *
      * @return оценка фальма на сервисе Кинопоиск
      */
     @XmlElement(name = "kinopoisk_score")
@@ -131,6 +167,7 @@ public class Movie {
 
     /**
      * Устанавливает оценку фильма на сервисе Кинопоиск
+     *
      * @param kinopoiskScore оценка фильма на сервисе Кинопоиск
      */
     public void setKinopoiskScore(Double kinopoiskScore) {
@@ -139,6 +176,7 @@ public class Movie {
 
     /**
      * Возвращает длительность фильма
+     *
      * @return длительность фильма
      */
     @XmlElement(name = "duration")
@@ -148,6 +186,7 @@ public class Movie {
 
     /**
      * Устанавливает длительность фильма
+     *
      * @param duration длительность фильма
      */
     public void setDuration(Integer duration) {
