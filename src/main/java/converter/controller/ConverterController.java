@@ -41,7 +41,7 @@ public class ConverterController {
      * @return шаблон формы
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String fileForm(@ModelAttribute final Form form) {
+    public String fileForm(@ModelAttribute Form form) {
         form.setFirstYearFilter(1970);
         form.setLastYearFilter(2020);
         return "form";
@@ -58,8 +58,8 @@ public class ConverterController {
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public @ResponseBody
-    ResponseEntity<Object> convertFile(@ModelAttribute final Form form,
-                                       @RequestParam("file") final MultipartFile file)
+    ResponseEntity<Object> convertFile(@ModelAttribute Form form,
+                                       @RequestParam("file") MultipartFile file)
             throws IOException, JAXBException {
         if (file.isEmpty() || file.getOriginalFilename() == null)
             throw new FileNotFoundException();
