@@ -1,5 +1,6 @@
 package converter.controller;
 
+import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.enums.CSVReaderNullFieldIndicator;
 import converter.model.Form;
@@ -20,17 +21,14 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * Контроллер конвертации файлов
  */
 @Controller
-public class ConverterController {
+public final class ConverterController {
 
     private final Logger logger = LoggerFactory.getLogger(ConverterController.class);
 
@@ -52,20 +50,18 @@ public class ConverterController {
      *
      * @param form параметры формы
      * @param file файл
-     * @throws IOException нарушение работы потока данных
+     * @throws IOException                         нарушение работы потока данных
      * @throws HttpClientErrorException.BadRequest некорректный запрос
-     * @throws JAXBException некорректная обработка XML файла
+     * @throws JAXBException                       некорректная обработка XML файла
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public @ResponseBody
-    ResponseEntity<Object> convertFile(@ModelAttribute Form form,
-                                       @RequestParam("file") MultipartFile file)
+    ResponseEntity<Object> convertFile(@ModelAttribute final Form form,
+                                       @RequestParam("file") final MultipartFile file)
             throws IOException, JAXBException {
         if (file.isEmpty() || file.getOriginalFilename() == null)
-            throw new FileNotFoundException();
-        String fileName = file.getOriginalFilename();
-        if (fileName.endsWith(".csv"))
-            fileName = fileName.substring(0, fileName.length() - 4);
+            throw new FileNotFoundException("Файл не найден или пустой");
+        final String fileName = file.getOriginalFilename();
 
         List<MovieCsv> parsedMovieList = parseMoviesFromCsvFile(file);
         logger.info("CSV файл {} считан.", fileName);
@@ -82,9 +78,9 @@ public class ConverterController {
             logger.info("Список {} отсортирован по полю {}", fileName, form.getSecondSorting());
 
         List<MovieXml> convertedMovieList = new ArrayList<>();
-        for(int i = 0; i < parsedMovieList.size(); i++)
-            convertedMovieList.add(new MovieXml(parsedMovieList.get(i), i));
-        MovieList movies = new MovieList(convertedMovieList);
+        for (int index = 0; index < parsedMovieList.size(); index++)
+            convertedMovieList.add(new MovieXml(parsedMovieList.get(index), index + 1));
+        final MovieList movies = new MovieList(convertedMovieList);
         String result = getXmlString(movies);
         logger.info("XML файл {} создан", fileName);
 
@@ -93,16 +89,20 @@ public class ConverterController {
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
-        return ResponseEntity.ok().headers(headers).contentType(MediaType.parseMediaType("text/xml")).body(result);
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.parseMediaType("text/xml"))
+                .body(result);
     }
 
     private List<MovieCsv> parseMoviesFromCsvFile(final MultipartFile file) throws IOException {
         try (InputStreamReader inputStreamReader = new InputStreamReader(file.getInputStream())) {
-            return new CsvToBeanBuilder<MovieCsv>(inputStreamReader)
+            CsvToBean<MovieCsv> csvToBean = new CsvToBeanBuilder<MovieCsv>(inputStreamReader)
                     .withType(MovieCsv.class)
                     .withFieldAsNull(CSVReaderNullFieldIndicator.EMPTY_SEPARATORS)
-                    .build()
-                    .parse();
+                    .build();
+            return csvToBean.parse();
         }
     }
 
@@ -129,38 +129,34 @@ public class ConverterController {
             return null;
         switch (value) {
             case "title":
-                return (o1, o2) -> getSortingValue(o1.getTitle(), o2.getTitle());
+                return Comparator.comparing(MovieCsv::getTitle,
+                        Comparator.nullsLast(Comparator.naturalOrder()));
             case "director":
-                return (o1, o2) -> getSortingValue(o1.getDirector(), o2.getDirector());
+                return Comparator.comparing(MovieCsv::getDirector,
+                        Comparator.nullsLast(Comparator.naturalOrder()));
             case "genre":
-                return (o1, o2) -> getSortingValue(o1.getGenre(), o2.getGenre());
+                return Comparator.comparing(MovieCsv::getGenre,
+                        Comparator.nullsLast(Comparator.naturalOrder()));
             case "releaseYear":
-                return (o1, o2) -> getSortingValue(o1.getReleaseYear(), o2.getReleaseYear());
+                return Comparator.comparing(MovieCsv::getReleaseYear,
+                        Comparator.nullsLast(Comparator.naturalOrder()));
             case "country":
-                return (o1, o2) -> getSortingValue(o1.getCountry(), o2.getCountry());
+                return Comparator.comparing(MovieCsv::getCountry,
+                        Comparator.nullsLast(Comparator.naturalOrder()));
             case "kinopoiskScore":
-                return (o1, o2) -> getSortingValue(o1.getKinopoiskScore(), o2.getKinopoiskScore());
+                return Comparator.comparing(MovieCsv::getKinopoiskScore,
+                        Comparator.nullsLast(Comparator.naturalOrder()));
             case "duration":
-                return (o1, o2) -> getSortingValue(o1.getDuration(), o2.getDuration());
+                return Comparator.comparing(MovieCsv::getDuration,
+                        Comparator.nullsLast(Comparator.naturalOrder()));
             default:
-                throw new NoSuchElementException();
+                throw new NoSuchElementException("Некорректный вариант сортировки");
         }
     }
 
-    private <T extends Comparable<T>> Integer getSortingValue(final T o1, final T o2) {
-        if (o1 == null && o2 == null)
-            return 0;
-        else if (o1 == null)
-            return 1;
-        else if (o2 == null)
-            return -1;
-        else
-            return o1.compareTo(o2);
-    }
-
     private String getXmlString(final MovieList movies) throws JAXBException, IOException {
-        JAXBContext context = JAXBContext.newInstance(MovieList.class);
-        Marshaller marshaller = context.createMarshaller();
+        Marshaller marshaller = JAXBContext.newInstance(MovieList.class)
+                .createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         try (Writer writer = new StringWriter()) {
             marshaller.marshal(movies, writer);
