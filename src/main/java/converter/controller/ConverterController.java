@@ -85,7 +85,9 @@ public final class ConverterController {
         logger.info("XML файл {} создан", fileName);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName + ".xml"));
+
+        headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"",
+                (fileName.endsWith(".csv") ? fileName.substring(0, fileName.length() - 4) : fileName).concat(".xml")));
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");

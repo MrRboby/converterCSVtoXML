@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<movies>
+    <movie id="1">
+        <title>Дневник памяти</title>
+        <director>Ник Кассаветис</director>
+        <genre>драма</genre>
+        <release_year>2004</release_year>
+        <country>США</country>
+        <kinopoisk_score>8.251</kinopoisk_score>
+        <duration>124</duration>
+    </movie>
+    <movie id="2">
+        <title>Не волнуйся, у меня всё нормально</title>
+        <director>Филипп Лиоре</director>
+        <genre>драма</genre>
+        <release_year>2006</release_year>
+        <country>Франция</country>
+        <kinopoisk_score>7.413</kinopoisk_score>
+        <duration>92</duration>
+    </movie>
+    <movie id="3">
+        <title>Амели</title>
+        <director>Жан-Пьер Жёне</director>
+        <genre>мелодрама</genre>
+        <release_year>2001</release_year>
+        <country>Франция</country>
+        <kinopoisk_score>7.994</kinopoisk_score>
+        <duration>122</duration>
+    </movie>
+    <movie id="4">
+        <title>Я, робот</title>
+        <director>Алекс Пройас</director>
+        <genre>фантастика</genre>
+        <release_year>2004</release_year>
+        <country>США</country>
+        <kinopoisk_score>7.825</kinopoisk_score>
+        <duration>115</duration>
+    </movie>
+    <movie id="5">
+        <title>Суперсемейка</title>
+        <director>Брэд Бёрд</director>
+        <genre>мультфильм</genre>
+        <release_year>2004</release_year>
+        <country>США</country>
+        <kinopoisk_score>7.536</kinopoisk_score>
+        <duration>115</duration>
+    </movie>
+</movies>

@@ -6,7 +6,7 @@
 </head>
 <body>
 <form method="post" enctype="multipart/form-data" th:action="@{/}" th:object="${form}">
-    <label>Файл: <input type="file" name="file"/></label>
+    <label>Файл: <input type="file" accept=".csv" name="file"/></label>
     <div class="sort_container">
         <fieldset class="first_sort">
             <legend>Сортировка:</legend>
