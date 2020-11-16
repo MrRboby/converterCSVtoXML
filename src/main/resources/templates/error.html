@@ -4,7 +4,14 @@
     <title>Ошибка</title>
 </head>
 <body>
-<p th:text="'Произошла ошибка: ' + ${error}"/>
+<!--<p th:text="'Произошла ошибка: ' + ${#strings.replace(error,'&#10;','&lt;br&gt;')}"></p>-->
+<!--<p th:each="line : ${#error.arraySplit(model.text, T(org.apache.commons.lang3.StringUtils).LF)}" >
+    <p th:text="${line}"></p>-->
+<table>
+    <tr th:each="line : ${#strings.arraySplit('Произошла ошибка: ' + error, T(org.apache.commons.lang3.StringUtils).LF)}">
+        <td th:text="${line}"></td>
+    </tr>
+</table>
 <a href="/">Вернуться</a>
 </body>
 </html>

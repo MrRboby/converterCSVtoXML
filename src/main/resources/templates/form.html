@@ -10,6 +10,7 @@
     <div class="sort_container">
         <fieldset class="first_sort">
             <legend>Сортировка:</legend>
+            <label><input type="radio" name="firstSort" th:value="noSorting" th:field="*{firstSorting}"/>Нет</label>
             <label><input type="radio" name="firstSort" th:value="title" th:field="*{firstSorting}"/>Название</label>
             <label><input type="radio" name="firstSort" th:value="director" th:field="*{firstSorting}"/>Режиссер</label>
             <label><input type="radio" name="firstSort" th:value="genre" th:field="*{firstSorting}"/>Жанр</label>
@@ -22,6 +23,7 @@
         </fieldset>
         <fieldset class="second_sort">
             <legend>Дополнительная сортировка:</legend>
+            <label><input type="radio" name="secondSort" th:value="noSorting" th:field="*{secondSorting}"/>Нет</label>
             <label><input type="radio" name="secondSort" th:value="title" th:field="*{secondSorting}"/>Название</label>
             <label><input type="radio" name="secondSort" th:value="director"
                           th:field="*{secondSorting}"/>Режиссер</label>
@@ -34,9 +36,9 @@
         </fieldset>
     </div>
     <label>Выбрать фильмы, вышедшие в период с
-        <input type="text" name="firstYearFilter" th:field="*{firstYearFilter}"/> по
-        <input type="text" name="lastYearFilter" th:field="*{lastYearFilter}"/></label><br>
-    <label><input type="submit" value="Upload"> Нажмите, чтобы отправить файл!</label>
+        <input type="number" min="1920" name="firstYearFilter" th:field="*{firstYearFilter}"/> по
+        <input type="number" min="1920" name="lastYearFilter" th:field="*{lastYearFilter}"/></label><br>
+    <label><input type="submit" value="Загрузить"> Нажмите, чтобы отправить файл!</label>
 </form>
 </body>
 </html>

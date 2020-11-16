@@ -10,13 +10,13 @@ import java.util.List;
  */
 @XmlRootElement(name = "movies")
 public class MovieList {
-    private List<MovieXml> movies;
+    private List<MovieOutput> movies;
 
     /**
      * Создание пустого хранилища фильмов
      */
     public MovieList() {
-        movies = new ArrayList<MovieXml>();
+        movies = new ArrayList<MovieOutput>();
     }
 
     /**
@@ -24,7 +24,7 @@ public class MovieList {
      *
      * @param movies список фильмов
      */
-    public MovieList(List<MovieXml> movies) {
+    public MovieList(List<MovieOutput> movies) {
         this.movies = movies;
     }
 
@@ -33,7 +33,7 @@ public class MovieList {
      *
      * @param movies список фильмов
      */
-    public void setMovies(List<MovieXml> movies) {
+    public void setMovies(List<MovieOutput> movies) {
         this.movies = movies;
     }
 
@@ -43,7 +43,7 @@ public class MovieList {
      * @return список фильмов
      */
     @XmlElement(name = "movie")
-    public List<MovieXml> getMovies() {
+    public List<MovieOutput> getMovies() {
         return movies;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <movies>
-    <movie id="1">
+    <movie id="12">
         <title>Семейство Белье</title>
         <director>Эрик Лартиго</director>
         <genre>драма</genre>
@@ -9,7 +9,7 @@
         <kinopoisk_score>7.177</kinopoisk_score>
         <duration>106</duration>
     </movie>
-    <movie id="2">
+    <movie id="7">
         <title>Не волнуйся, у меня всё нормально</title>
         <director>Филипп Лиоре</director>
         <genre>драма</genre>
@@ -18,7 +18,7 @@
         <kinopoisk_score>7.413</kinopoisk_score>
         <duration>92</duration>
     </movie>
-    <movie id="3">
+    <movie id="5">
         <title>Дневник памяти</title>
         <director>Ник Кассаветис</director>
         <genre>драма</genre>
@@ -27,7 +27,7 @@
         <kinopoisk_score>8.251</kinopoisk_score>
         <duration>124</duration>
     </movie>
-    <movie id="4">
+    <movie id="0">
         <title>Титаник</title>
         <director>Джеймс Кэмерон</director>
         <genre>драма</genre>
@@ -36,7 +36,7 @@
         <kinopoisk_score>8.364</kinopoisk_score>
         <duration>194</duration>
     </movie>
-    <movie id="5">
+    <movie id="17">
         <title>Москва слезам не верит</title>
         <director>Владимир Меньшов</director>
         <genre>драма</genre>
@@ -45,7 +45,7 @@
         <kinopoisk_score>8.375</kinopoisk_score>
         <duration>150</duration>
     </movie>
-    <movie id="6">
+    <movie id="11">
         <title>Амели</title>
         <director>Жан-Пьер Жёне</director>
         <genre>мелодрама</genre>
@@ -54,7 +54,7 @@
         <kinopoisk_score>7.994</kinopoisk_score>
         <duration>122</duration>
     </movie>
-    <movie id="7">
+    <movie id="6">
         <title>Ирония судьбы, или С легким паром!</title>
         <director>Эльдар Рязанов</director>
         <genre>мелодрама</genre>
@@ -63,7 +63,7 @@
         <kinopoisk_score>8.197</kinopoisk_score>
         <duration>184</duration>
     </movie>
-    <movie id="8">
+    <movie id="19">
         <title>Суперсемейка</title>
         <director>Брэд Бёрд</director>
         <genre>мультфильм</genre>
@@ -72,7 +72,7 @@
         <kinopoisk_score>7.536</kinopoisk_score>
         <duration>115</duration>
     </movie>
-    <movie id="9">
+    <movie id="14">
         <title>Маленький принц</title>
         <director>Марк Осборн</director>
         <genre>мультфильм</genre>
@@ -81,7 +81,7 @@
         <kinopoisk_score>7.91</kinopoisk_score>
         <duration>108</duration>
     </movie>
-    <movie id="10">
+    <movie id="15">
         <title>Небесные ласточки</title>
         <director>Леонид Квинихидзе</director>
         <genre>мюзикл</genre>
@@ -90,7 +90,7 @@
         <kinopoisk_score>7.691</kinopoisk_score>
         <duration>126</duration>
     </movie>
-    <movie id="11">
+    <movie id="13">
         <title>Мэри Поппинс, до свидания</title>
         <director>Леонид Квинихидзе</director>
         <genre>мюзикл</genre>
@@ -99,7 +99,7 @@
         <kinopoisk_score>7.987</kinopoisk_score>
         <duration>141</duration>
     </movie>
-    <movie id="12">
+    <movie id="10">
         <title>Парк Юрского периода</title>
         <director>Стивен Спилберг</director>
         <genre>приключения</genre>
@@ -108,7 +108,7 @@
         <kinopoisk_score>7.763</kinopoisk_score>
         <duration>127</duration>
     </movie>
-    <movie id="13">
+    <movie id="8">
         <title>Индиана Джонс: В поисках утраченного ковчега</title>
         <director>Стивен Спилберг</director>
         <genre>приключения</genre>
@@ -117,7 +117,7 @@
         <kinopoisk_score>7.994</kinopoisk_score>
         <duration>115</duration>
     </movie>
-    <movie id="14">
+    <movie id="4">
         <title>Операция "Арго"</title>
         <director>Бен Аффлек</director>
         <genre>триллер</genre>
@@ -126,7 +126,7 @@
         <kinopoisk_score>7.517</kinopoisk_score>
         <duration>120</duration>
     </movie>
-    <movie id="15">
+    <movie id="9">
         <title>Инопланетянин</title>
         <director>Стивен Спилберг</director>
         <genre>фантастика</genre>
@@ -135,7 +135,7 @@
         <kinopoisk_score>7.778</kinopoisk_score>
         <duration>115</duration>
     </movie>
-    <movie id="16">
+    <movie id="18">
         <title>Я, робот</title>
         <director>Алекс Пройас</director>
         <genre>фантастика</genre>
@@ -144,7 +144,7 @@
         <kinopoisk_score>7.825</kinopoisk_score>
         <duration>115</duration>
     </movie>
-    <movie id="17">
+    <movie id="1">
         <title>Звёздные войны: Эпизод 4 - Новая надежда</title>
         <director>Джордж Лукас</director>
         <genre>фантастика</genre>
@@ -153,7 +153,7 @@
         <kinopoisk_score>8.106</kinopoisk_score>
         <duration>121</duration>
     </movie>
-    <movie id="18">
+    <movie id="2">
         <title>Звёздные войны: Эпизод 5 - Империя наносит ответный удар</title>
         <director>Джордж Лукас</director>
         <genre>фантастика</genre>
@@ -162,7 +162,7 @@
         <kinopoisk_score>8.127</kinopoisk_score>
         <duration>124</duration>
     </movie>
-    <movie id="19">
+    <movie id="3">
         <title>Звёздные войны: Эпизод 6 - Возвращение Джедая</title>
         <director>Джордж Лукас</director>
         <genre>фантастика</genre>
@@ -171,7 +171,7 @@
         <kinopoisk_score>8.147</kinopoisk_score>
         <duration>131</duration>
     </movie>
-    <movie id="20">
+    <movie id="16">
         <title>Иван Васильевич меняет профессию</title>
         <director>Леонид Гайдай</director>
         <genre>фантастика</genre>

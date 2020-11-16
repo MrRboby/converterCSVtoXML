@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <movies>
-    <movie id="1">
+    <movie id="0">
         <director>Джеймс Кэмерон</director>
         <genre>драма</genre>
         <release_year>1997</release_year>
@@ -8,7 +8,7 @@
         <kinopoisk_score>8.364</kinopoisk_score>
         <duration>194</duration>
     </movie>
-    <movie id="2">
+    <movie id="1">
         <title>Звёздные войны: Эпизод 4 - Новая надежда</title>
         <genre>фантастика</genre>
         <release_year>1977</release_year>
@@ -16,7 +16,7 @@
         <kinopoisk_score>8.106</kinopoisk_score>
         <duration>121</duration>
     </movie>
-    <movie id="3">
+    <movie id="2">
         <title>Звёздные войны: Эпизод 5 - Империя наносит ответный удар</title>
         <director>Джордж Лукас</director>
         <release_year>1980</release_year>
@@ -24,7 +24,7 @@
         <kinopoisk_score>8.127</kinopoisk_score>
         <duration>124</duration>
     </movie>
-    <movie id="4">
+    <movie id="3">
         <title>Звёздные войны: Эпизод 6 - Возвращение Джедая</title>
         <director>Джордж Лукас</director>
         <genre>фантастика</genre>

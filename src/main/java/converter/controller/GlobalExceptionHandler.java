@@ -91,7 +91,7 @@ public final class GlobalExceptionHandler {
      */
     @ExceptionHandler(CsvDataTypeMismatchException.class)
     public String handleError(CsvDataTypeMismatchException exception, Model model) {
-        model.addAttribute("error", String.format("CSV файл содержит некорректное значение в строке %d", exception.getLineNumber()));
+        model.addAttribute("error", exception.getMessage());
         logger.warn("Некорректный CSV файл ({})", exception.getMessage());
         return "error";
     }
