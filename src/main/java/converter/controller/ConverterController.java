@@ -96,7 +96,15 @@ public final class ConverterController {
         return result;
     }
 
-    private List<MovieInput> parseMoviesFromCsvFile(final MultipartFile file) throws IOException, CsvDataTypeMismatchException {
+    /**
+     * Парсинг списка фильмов из CSV-файла
+     *
+     * @param file CSV-файл
+     * @return список фильмов
+     * @throws IOException                  нарушение работы потока данных файла
+     * @throws CsvDataTypeMismatchException некорректные значения полей входного файла
+     */
+    public static List<MovieInput> parseMoviesFromCsvFile(final MultipartFile file) throws IOException, CsvDataTypeMismatchException {
         List<String> errorsList = new ArrayList<>();
         try (InputStream inputStream = file.getInputStream();
              InputStreamReader inputStreamReader = new InputStreamReader(inputStream)) {
@@ -158,13 +166,28 @@ public final class ConverterController {
         }
     }
 
-    private List<MovieInput> filterMoviesByYear(final List<MovieInput> list, final Integer firstYear, final Integer lastYear) {
+    /**
+     * Фильтрация списка фильмов по году
+     *
+     * @param list      список фильмов
+     * @param firstYear начальный год
+     * @param lastYear  конечный год
+     * @return отфильтрованный список фильмов
+     */
+    public static List<MovieInput> filterMoviesByYear(final List<MovieInput> list, final Integer firstYear, final Integer lastYear) {
         return list.stream().filter(movie -> movie.getReleaseYear() != null
                 && movie.getReleaseYear() >= firstYear && movie.getReleaseYear() <= lastYear)
                 .collect(Collectors.toList());
     }
 
-    private void sortMoviesWithParams(final List<MovieInput> list, final String firstSorting, final String secondSorting) {
+    /**
+     * Сортировка списка фильмов
+     *
+     * @param list          список фильмов
+     * @param firstSorting  основное поле для сортировки
+     * @param secondSorting дополнительное поле для сортировки
+     */
+    public static void sortMoviesWithParams(final List<MovieInput> list, final String firstSorting, final String secondSorting) {
         Comparator<MovieInput> firstComparator = getMovieComparatorOrNullByValue(firstSorting),
                 secondComparator = getMovieComparatorOrNullByValue(secondSorting);
         if (firstComparator != null && secondComparator != null) {
@@ -176,7 +199,7 @@ public final class ConverterController {
         }
     }
 
-    private Comparator<MovieInput> getMovieComparatorOrNullByValue(final String value) throws NoSuchElementException {
+    private static Comparator<MovieInput> getMovieComparatorOrNullByValue(final String value) throws NoSuchElementException {
         switch (value) {
             case "title":
                 return Comparator.comparing(MovieInput::getTitle,
@@ -206,7 +229,15 @@ public final class ConverterController {
         }
     }
 
-    private String getXmlString(final MovieList movies) throws JAXBException, IOException {
+    /**
+     * Маршалинг XML файла
+     *
+     * @param movies список фильмов
+     * @return строка XML
+     * @throws JAXBException некорректная работа при преобразовании
+     * @throws IOException   нарушение работы записи в строку
+     */
+    public static String getXmlString(final MovieList movies) throws JAXBException, IOException {
         Marshaller marshaller = JAXBContext.newInstance(MovieList.class)
                 .createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);

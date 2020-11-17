@@ -29,6 +29,20 @@ public class MovieInput {
 
     private int id;
 
+    public MovieInput() {}
+
+    public MovieInput(String title, String director, String genre, Integer releaseYear,
+                      String country, Double kinopoiskScore, Integer duration, int id) {
+        this.title = title;
+        this.director = director;
+        this.genre = genre;
+        this.releaseYear = releaseYear;
+        this.country = country;
+        this.kinopoiskScore = kinopoiskScore;
+        this.duration = duration;
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -91,5 +105,17 @@ public class MovieInput {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        MovieInput other = (MovieInput)obj;
+        return this.title.equals(other.title) &&
+                this.director.equals(other.director) &&
+                this.genre.equals(other.genre) &&
+                this.releaseYear.equals(other.releaseYear) &&
+                this.country.equals(other.country) &&
+                this.kinopoiskScore.equals(other.kinopoiskScore) &&
+                this.id == other.id;
     }
 }
