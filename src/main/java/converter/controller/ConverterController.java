@@ -4,12 +4,15 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.enums.CSVReaderNullFieldIndicator;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import converter.MovieMapper;
 import converter.model.Form;
 import converter.model.MovieInput;
 import converter.model.MovieOutput;
 import converter.model.MovieList;
+import org.apache.logging.log4j.util.PropertySource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +32,9 @@ import java.util.stream.Collectors;
 @Controller
 public final class ConverterController {
 
+    @Autowired
+    private MovieMapper movieMapper;
+
     private final Logger logger = LoggerFactory.getLogger(ConverterController.class);
 
     /**
@@ -41,8 +47,8 @@ public final class ConverterController {
     public String fileForm(@ModelAttribute Form form) {
         form.setFirstYearFilter(1970);
         form.setLastYearFilter(2020);
-        form.setFirstSorting("noSorting");
-        form.setSecondSorting("noSorting");
+        form.setFirstSorting("");
+        form.setSecondSorting("");
         return "form";
     }
 
@@ -52,17 +58,16 @@ public final class ConverterController {
      * @param form     параметры формы
      * @param file     файл
      * @param response данные о выходном файле
-     * @return выходные данные
      * @throws IOException                  нарушение работы потока данных
      * @throws JAXBException                некорректная обработка XML файла
-     * @throws IllegalAccessException       отсутствие доступа к полям хранилища выходного файла
      * @throws CsvDataTypeMismatchException некорректные значения полей входного файла
+     * @throws NoSuchMethodException некорректное значение сортировки
      */
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
     public @ResponseBody
-    String convertFile(@ModelAttribute final Form form,
+    void convertFile(@ModelAttribute final Form form,
                        @RequestParam("file") final MultipartFile file, HttpServletResponse response)
-            throws IOException, JAXBException, IllegalAccessException, CsvDataTypeMismatchException {
+            throws IOException, JAXBException, CsvDataTypeMismatchException, NoSuchMethodException {
         if (file.isEmpty() || file.getOriginalFilename() == null)
             throw new FileNotFoundException("Файл не найден или пустой");
         final String fileName = file.getOriginalFilename();
@@ -75,25 +80,27 @@ public final class ConverterController {
                 fileName, form.getFirstYearFilter(), form.getLastYearFilter());
 
         sortMoviesWithParams(parsedMovieList, form.getFirstSorting(), form.getSecondSorting());
-        if (form.getFirstSorting() != null && form.getSecondSorting() != null)
+        if (!form.getFirstSorting().equals("") && !form.getSecondSorting().equals(""))
             logger.info("Список {} отсортирован по первому полю {} и второму полю {}",
                     fileName, form.getFirstSorting(), form.getSecondSorting());
-        else if (form.getFirstSorting() != null)
+        else if (!form.getFirstSorting().equals(""))
             logger.info("Список {} отсортирован по полю {}", fileName, form.getFirstSorting());
-        else if (form.getSecondSorting() != null)
+        else if (!form.getSecondSorting().equals(""))
             logger.info("Список {} отсортирован по полю {}", fileName, form.getSecondSorting());
 
         List<MovieOutput> convertedMovieList = new ArrayList<>();
         for (int index = 0; index < parsedMovieList.size(); index++)
-            convertedMovieList.add(new MovieOutput(parsedMovieList.get(index)));
+            convertedMovieList.add(movieMapper.movieInputToOutput(parsedMovieList.get(index)));
         final MovieList movies = new MovieList(convertedMovieList);
-        String result = getXmlString(movies);
-        logger.info("XML файл {} создан", fileName);
 
         response.addHeader("Content-Disposition", String.format("attachment; filename=\"%s\"",
                 (fileName.endsWith(".csv") ? fileName.substring(0, fileName.length() - 4) : fileName).concat(".xml")));
         response.setCharacterEncoding("utf-8");
-        return result;
+
+        writeXmlStringToStream(movies, response.getOutputStream());
+        logger.info("XML файл {} создан", fileName);
+        response.getOutputStream().close();
+
     }
 
     /**
@@ -199,51 +206,44 @@ public final class ConverterController {
         }
     }
 
-    private static Comparator<MovieInput> getMovieComparatorOrNullByValue(final String value) throws NoSuchElementException {
-        switch (value) {
-            case "title":
-                return Comparator.comparing(MovieInput::getTitle,
-                        Comparator.nullsLast(Comparator.naturalOrder()));
-            case "director":
-                return Comparator.comparing(MovieInput::getDirector,
-                        Comparator.nullsLast(Comparator.naturalOrder()));
-            case "genre":
-                return Comparator.comparing(MovieInput::getGenre,
-                        Comparator.nullsLast(Comparator.naturalOrder()));
-            case "releaseYear":
-                return Comparator.comparing(MovieInput::getReleaseYear,
-                        Comparator.nullsLast(Comparator.naturalOrder()));
-            case "country":
-                return Comparator.comparing(MovieInput::getCountry,
-                        Comparator.nullsLast(Comparator.naturalOrder()));
-            case "kinopoiskScore":
-                return Comparator.comparing(MovieInput::getKinopoiskScore,
-                        Comparator.nullsLast(Comparator.naturalOrder()));
-            case "duration":
-                return Comparator.comparing(MovieInput::getDuration,
-                        Comparator.nullsLast(Comparator.naturalOrder()));
-            case "noSorting":
-                return null;
-            default:
-                throw new NoSuchElementException("Некорректный вариант сортировки");
-        }
+    private static Comparator<MovieInput> getMovieComparatorOrNullByValue(final String value) {
+        if (value.equals(""))
+            return null;
+        String comparingMethod = "get".concat(value.substring(0, 1).toUpperCase()).concat(value.substring(1));
+        return (movieInput1, movieInput2) -> {
+            Comparable comparable1 = null, comparable2 = null;
+            try {
+                comparable1 = (Comparable) MovieInput.class.getMethod(comparingMethod).invoke(movieInput1);
+            } catch (Exception ignored) {
+            }
+            try {
+                comparable2 = (Comparable) MovieInput.class.getMethod(comparingMethod).invoke(movieInput2);
+            } catch (Exception ignored) {
+            }
+            if (comparable1 != null && comparable2 != null)
+                return comparable1.compareTo(comparable2);
+            if (comparable1 != null)
+                return 1;
+            if (comparable2 != null)
+                return -1;
+            return 0;
+        };
     }
 
     /**
      * Маршалинг XML файла
      *
-     * @param movies список фильмов
-     * @return строка XML
+     * @param movies       список фильмов
+     * @param outputStream поток, принимающий значение XML
      * @throws JAXBException некорректная работа при преобразовании
      * @throws IOException   нарушение работы записи в строку
      */
-    public static String getXmlString(final MovieList movies) throws JAXBException, IOException {
+    public static void writeXmlStringToStream(final MovieList movies, final OutputStream outputStream) throws JAXBException, IOException {
         Marshaller marshaller = JAXBContext.newInstance(MovieList.class)
                 .createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        try (Writer writer = new StringWriter()) {
+        try (Writer writer = new OutputStreamWriter(outputStream)) {
             marshaller.marshal(movies, writer);
-            return writer.toString();
         }
     }
 }

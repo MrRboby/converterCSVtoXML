@@ -10,7 +10,7 @@
     <div class="sort_container">
         <fieldset class="first_sort">
             <legend>Сортировка:</legend>
-            <label><input type="radio" name="firstSort" th:value="noSorting" th:field="*{firstSorting}"/>Нет</label>
+            <label><input type="radio" name="firstSort" th:value="''" th:field="*{firstSorting}"/>Нет</label>
             <label><input type="radio" name="firstSort" th:value="title" th:field="*{firstSorting}"/>Название</label>
             <label><input type="radio" name="firstSort" th:value="director" th:field="*{firstSorting}"/>Режиссер</label>
             <label><input type="radio" name="firstSort" th:value="genre" th:field="*{firstSorting}"/>Жанр</label>
@@ -23,7 +23,7 @@
         </fieldset>
         <fieldset class="second_sort">
             <legend>Дополнительная сортировка:</legend>
-            <label><input type="radio" name="secondSort" th:value="noSorting" th:field="*{secondSorting}"/>Нет</label>
+            <label><input type="radio" name="secondSort" th:value="''" th:field="*{secondSorting}"/>Нет</label>
             <label><input type="radio" name="secondSort" th:value="title" th:field="*{secondSorting}"/>Название</label>
             <label><input type="radio" name="secondSort" th:value="director"
                           th:field="*{secondSorting}"/>Режиссер</label>

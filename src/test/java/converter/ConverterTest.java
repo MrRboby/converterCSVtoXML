@@ -8,6 +8,7 @@ import converter.model.MovieOutput;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -36,8 +38,8 @@ public class ConverterTest {
         form = new Form();
         form.setFirstYearFilter(1970);
         form.setLastYearFilter(2020);
-        form.setFirstSorting("noSorting");
-        form.setSecondSorting("noSorting");
+        form.setFirstSorting("");
+        form.setSecondSorting("");
     }
 
     @Test
@@ -268,10 +270,14 @@ public class ConverterTest {
 
         List<MovieOutput> movieOutputList = new ArrayList<>();
         for (int index = 0; index < movieInputList.size(); index++)
-            movieOutputList.add(new MovieOutput(movieInputList.get(index)));
+            movieOutputList.add(Mappers.getMapper(MovieMapper.class).movieInputToOutput(movieInputList.get(index)));
         MovieList movies = new MovieList(movieOutputList);
 
-        String output = ConverterController.getXmlString(movies);
+        String output;
+        try(ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            ConverterController.writeXmlStringToStream(movies, outputStream);
+            output = outputStream.toString("utf-8");
+        }
 
         Assertions.assertEquals(xml, output);
     }

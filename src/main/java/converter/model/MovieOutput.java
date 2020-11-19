@@ -10,7 +10,7 @@ import java.lang.reflect.Field;
  */
 @XmlType(propOrder = {"title", "director", "genre", "releaseYear", "country", "kinopoiskScore", "duration"})
 public class MovieOutput {
-    private Integer id;
+    private int id;
     private String title;
     private String director;
     private String genre;
@@ -19,26 +19,14 @@ public class MovieOutput {
     private Double kinopoiskScore;
     private Integer duration;
 
-    public MovieOutput(MovieInput movieInput) throws IllegalAccessException {
-        Field[] outputFields = this.getClass().getDeclaredFields();
-        Field[] inputFields = movieInput.getClass().getDeclaredFields();
-        for(Field outputField : outputFields) {
-            for (Field inputField : inputFields) {
-                if (outputField.getName().equals(inputField.getName())) {
-                    outputField.setAccessible(true);
-                    inputField.setAccessible(true);
-                    outputField.set(this, inputField.get(movieInput));
-                }
-            }
-        }
-    }
+    public MovieOutput(MovieInput movieInput) {}
 
     @XmlAttribute(name = "id")
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
